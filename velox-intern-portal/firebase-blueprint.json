@@ -1,0 +1,71 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Represents an intern, employee, or admin.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "intern", "employee"] },
+        "status": { "type": "string", "enum": ["active", "inactive"] },
+        "joiningDate": { "type": "string", "format": "date-time" },
+        "whatsapp": { "type": "string" }
+      },
+      "required": ["uid", "name", "email", "role"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "A task assigned to an intern or employee.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "deadline": { "type": "string", "format": "date-time" },
+        "assignedTo": { "type": "string" },
+        "assignedByName": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "in-progress", "completed"] },
+        "submissionUrl": { "type": "string" },
+        "progress": { "type": "number", "description": "Progress percentage from 0 to 100" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "deadline", "assignedTo", "status", "progress"]
+    },
+    "Application": {
+      "title": "Application",
+      "description": "An internship application.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "whatsapp": { "type": "string" },
+        "resumeUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "accepted", "rejected"] },
+        "appliedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "status", "appliedAt"]
+    },
+    "Doubt": {
+      "title": "Doubt",
+      "description": "A question asked by an intern.",
+      "type": "object",
+      "properties": {
+        "internId": { "type": "string" },
+        "internName": { "type": "string" },
+        "mentorId": { "type": "string" },
+        "question": { "type": "string" },
+        "answer": { "type": "string" },
+        "status": { "type": "string", "enum": ["open", "resolved"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["internId", "question", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": { "schema": "User", "description": "User profiles" },
+    "/tasks/{taskId}": { "schema": "Task", "description": "Assigned tasks" },
+    "/applications/{applicationId}": { "schema": "Application", "description": "Internship applications" },
+    "/doubts/{doubtId}": { "schema": "Doubt", "description": "Intern doubts and resolutions" }
+  }
+}
